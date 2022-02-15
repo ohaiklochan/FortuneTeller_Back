@@ -1,51 +1,52 @@
-class CookiesController < ApplicationController
-  before_action :set_cooky, only: [:show, :update, :destroy]
+class Api::V1::CookiesController < ApplicationController
+  before_action :set_cookie, only: [:show, :update, :destroy]
 
   # GET /cookies
   def index
     @cookies = Cookie.all
 
-    render json: @cookies
+    render json: { cookie: @cookies }
   end
 
   # GET /cookies/1
   def show
-    render json: @cooky
+    @cookie = Cookies.find(params[:id])
+    render json: { cookie: @cookies}
   end
 
   # POST /cookies
   def create
-    @cooky = Cookie.new(cooky_params)
+    @cookie = Cookie.new(cookie_params)
 
-    if @cooky.save
-      render json: @cooky, status: :created, location: @cooky
+    if @cookie.save
+      render json: @cookie, status: :created, location: @cookie
     else
-      render json: @cooky.errors, status: :unprocessable_entity
+      render json: @cookie.errors, status: :unprocessable_entity
     end
   end
 
   # PATCH/PUT /cookies/1
   def update
-    if @cooky.update(cooky_params)
-      render json: @cooky
+    if @cookie.update(cookie_params)
+      render json: @cookie
     else
-      render json: @cooky.errors, status: :unprocessable_entity
+      render json: @cookie.errors, status: :unprocessable_entity
     end
   end
 
   # DELETE /cookies/1
   def destroy
-    @cooky.destroy
+    @cookie.destroy
   end
 
   private
     # Use callbacks to share common setup or constraints between actions.
-    def set_cooky
-      @cooky = Cookie.find(params[:id])
+    def set_cookie
+      @cookie = Cookie.find(params[:id])
     end
 
     # Only allow a list of trusted parameters through.
-    def cooky_params
-      params.require(:cooky).permit(:fortune, :meaning)
+    def cookie_params
+      params.require(:cookie).permit(:fortune, :meaning)
     end
 end

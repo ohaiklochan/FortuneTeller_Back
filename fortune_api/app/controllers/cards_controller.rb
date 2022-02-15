@@ -1,16 +1,17 @@
-class CardsController < ApplicationController
+class Api::V1::CardsController < ApplicationController
   before_action :set_card, only: [:show, :update, :destroy]
 
   # GET /cards
   def index
     @cards = Card.all
 
-    render json: @cards
+    render json: { cards: @cards }
   end
 
   # GET /cards/1
   def show
-    render json: @card
+    @cards = Cards.find(params[:id])
+    render json: { cards: @cards }
   end
 
   # POST /cards
@@ -46,6 +47,6 @@ class CardsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def card_params
-      params.require(:card).permit(:title, :upright_meaning, :reversed_meaning)
+      params.require(:card).permit(:title, :upright_meaning, :reversed_meaning, :reading, :imgUrl, :imgUrl_reversed, :reversed_reading)
     end
 end
