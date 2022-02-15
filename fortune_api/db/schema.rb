@@ -12,6 +12,8 @@
 
 ActiveRecord::Schema.define(version: 2022_02_11_234514) do
 
+  enable_extension "plpgsql"
+
   create_table "cards", force: :cascade do |t|
     t.string "title"
     t.string "upright_meaning"
